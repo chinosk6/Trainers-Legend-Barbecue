@@ -180,6 +180,9 @@ class UIChange(QObject):
             return
         user_config.config["file_root"] = folder_path
         user_config.save_config()
+        if update_tree:
+            self.ui_main_tab.lineEdit_file_root.setText(folder_path)
+            self.refresh_all_ui()
         return folder_path
 
     def update_local_files_tree(self):
