@@ -650,7 +650,7 @@ class UIChange(QObject):
                 with open(full_name, "wb") as f:
                     f.write(response.content)
                 count += 1
-                self.set_bar_value_signal.emit(int(count / tlen) * 100)
+                self.set_bar_value_signal.emit(int(count / tlen * 100))
             self.set_bar_visibility_signal.emit(False)
             self.show_msgbox_signal.emit("Tip", translate("MainWindow", "Pull finished."))
             if tlen > 0:
@@ -691,14 +691,14 @@ class UIChange(QObject):
                 if response.status_code != 200:
                     self.set_label_log_text_signal.emit(f"Upload file: {i} failed ({response.status_code}).")
                 count += 1
-                self.set_bar_value_signal.emit(int(count / tlen) * 100)
+                self.set_bar_value_signal.emit(int(count / tlen * 100))
 
             for i in delete_file_list:
                 response = uapi.delete_file(i)
                 if response.status_code != 200:
                     self.set_label_log_text_signal.emit(f"Delete file: {i} failed ({response.status_code}).")
                 count += 1
-                self.set_bar_value_signal.emit(int(count / tlen) * 100)
+                self.set_bar_value_signal.emit(int(count / tlen * 100))
 
             self.set_bar_visibility_signal.emit(False)
             self.show_msgbox_signal.emit("Tip", translate("MainWindow", "Commit finished."))
