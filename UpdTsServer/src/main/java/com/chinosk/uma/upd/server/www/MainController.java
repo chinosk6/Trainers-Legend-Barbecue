@@ -189,6 +189,24 @@ public class MainController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/api/update_token", method = {RequestMethod.GET})
+    public ResponseEntity<HashMap<String, Object>> updateToken(@RequestHeader Map<String, String> headers,
+                                                               @RequestParam Map<String, String> param) {
+        String token = headers.get("token");
+        String newToken = param.get("new_token");
+        UmaUsersDAO umaUsersDAO = UmaUsersDAO.getInstance();
+        if ((newToken == null) || newToken.equals("")) {
+            newToken = umaUsersDAO.changeToken(token);
+        }
+        else {
+            if (!umaUsersDAO.changeToken(token, newToken)) {
+                newToken = null;
+            }
+        }
+        return returnGenerator(200, newToken != null, "userinfo", newToken);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/file/get", method = {RequestMethod.GET})
     public ResponseEntity<HashMap<String, Object>> getFile(HttpServletResponse response,
                                                            @RequestParam Map<String, String> param) {

@@ -75,6 +75,25 @@ public class UmaUsersDAO {
         return usersMapper.delete(wrapper) > 0;
     }
 
+    public boolean changeToken(String token, String newToken) {
+        QueryWrapper<UmaUsers> wrapper = new QueryWrapper<>();
+        wrapper.eq("token", token);
+        UmaUsers oldInfo = usersMapper.selectOne(wrapper);
+        if (oldInfo == null) {
+            return false;
+        }
+        oldInfo.setToken(newToken);
+        return usersMapper.update(oldInfo, wrapper) > 0;
+    }
+
+    public String changeToken(String token) {
+        String newToken = BaseTools.getRandomString(18);
+        if (changeToken(token, newToken)){
+            return newToken;
+        }
+        return null;
+    }
+
     public Map<String, Object> addUser(String name, int permission) {
         String token = BaseTools.getRandomString(18);
         QueryWrapper<UmaUsers> wrapper = new QueryWrapper<>();
