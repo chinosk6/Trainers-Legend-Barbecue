@@ -1,3 +1,5 @@
+import json
+
 import requests
 from .user_config import user_config
 
@@ -48,3 +50,31 @@ def delete_file(filename: str):
         'token': token
     }
     return requests.request("DELETE", url, headers=headers, params={"filename": filename})
+
+
+def update_token(new_token=None):
+    api = user_config.api_endpoint
+    token = user_config.token
+    try:
+        url = f"{api}/api/update_token"
+        headers = {
+            'token': token,
+        }
+        if new_token:
+            params = {"new_token": new_token}
+            headers["new_token"] = new_token
+        else:
+            params = None
+        response = requests.request("GET", url, params=params, headers=headers)
+
+        data = json.loads(response.text)
+        if data.get("success", False):
+            n_token = data.get("data", None)
+            if n_token is None:
+                return None
+            user_config.token = n_token
+            user_config.save_config()
+            return n_token
+    except BaseException:
+        pass
+    return None

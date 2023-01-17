@@ -4,37 +4,37 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="main_tab_ui.py" line="237"/>
+        <location filename="main_tab_ui.py" line="241"/>
         <source>Trainers&apos; Legend Barbecue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main_tab_ui.py" line="238"/>
+        <location filename="main_tab_ui.py" line="242"/>
         <source>File Root</source>
         <translation type="unfinished">项目文件根目录</translation>
     </message>
     <message>
-        <location filename="main_tab_ui.py" line="239"/>
+        <location filename="main_tab_ui.py" line="243"/>
         <source>set</source>
         <translation type="unfinished">设置</translation>
     </message>
     <message>
-        <location filename="main_tab_ui.py" line="240"/>
+        <location filename="main_tab_ui.py" line="244"/>
         <source>Local Files</source>
         <translation type="unfinished">本地文件</translation>
     </message>
     <message>
-        <location filename="main_tab_ui.py" line="241"/>
+        <location filename="main_tab_ui.py" line="245"/>
         <source>Server Files</source>
         <translation type="unfinished">云端文件</translation>
     </message>
     <message>
-        <location filename="main_tab_ui.py" line="242"/>
+        <location filename="main_tab_ui.py" line="246"/>
         <source>Different Files</source>
         <translation type="unfinished">有差异的文件</translation>
     </message>
     <message>
-        <location filename="main_tab_ui.py" line="243"/>
+        <location filename="main_tab_ui.py" line="247"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -43,49 +43,54 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main_tab_ui.py" line="248"/>
+        <location filename="main_tab_ui.py" line="252"/>
         <source>Input your description...</source>
         <translation type="unfinished">输入您的描述...</translation>
     </message>
     <message>
-        <location filename="main_tab_ui.py" line="249"/>
+        <location filename="main_tab_ui.py" line="253"/>
         <source>Commit</source>
         <translation type="unfinished">提交</translation>
     </message>
     <message>
-        <location filename="main_tab_ui.py" line="250"/>
+        <location filename="main_tab_ui.py" line="254"/>
         <source>Commit Changes</source>
         <translation type="unfinished">提交更改</translation>
     </message>
     <message>
-        <location filename="main_tab_ui.py" line="251"/>
+        <location filename="main_tab_ui.py" line="255"/>
         <source>Ignore List</source>
         <translation type="unfinished">忽略列表</translation>
     </message>
     <message>
-        <location filename="main_tab_ui.py" line="252"/>
+        <location filename="main_tab_ui.py" line="256"/>
         <source>toolBar</source>
         <translation type="unfinished">工具栏</translation>
     </message>
     <message>
-        <location filename="main_tab_ui.py" line="253"/>
+        <location filename="main_tab_ui.py" line="257"/>
         <source>Refresh</source>
         <translation type="unfinished">刷新文件列表</translation>
     </message>
     <message>
-        <location filename="main_tab_ui.py" line="254"/>
+        <location filename="main_tab_ui.py" line="258"/>
         <source>About</source>
         <translation type="unfinished">关于</translation>
     </message>
     <message>
-        <location filename="main_tab_ui.py" line="255"/>
+        <location filename="main_tab_ui.py" line="259"/>
         <source>Pull From Server</source>
         <translation type="unfinished">从服务器拉取</translation>
     </message>
     <message>
-        <location filename="main_tab_ui.py" line="257"/>
+        <location filename="main_tab_ui.py" line="261"/>
         <source>Synchronizing data, please wait</source>
         <translation type="unfinished">同步文件中，请稍等</translation>
+    </message>
+    <message>
+        <location filename="main_tab_ui.py" line="262"/>
+        <source>Change Token</source>
+        <translation type="unfinished">更新 Token</translation>
     </message>
 </context>
 </TS>

@@ -8,14 +8,14 @@ from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtCore import QObject, QDir
 from PyQt5.QtGui import QCursor
 from PyQt5.QtWidgets import QDialog, QApplication, QMainWindow, QWidget, QStyleFactory, QDirModel, QFileDialog, \
-    QTreeWidgetItem, QStyle, QMenu
+    QTreeWidgetItem, QStyle, QMenu, QInputDialog
 from .qtui.ui_import import MainUI, MainTabUI, FilePreviewUI
 import ctypes
 from threading import Thread
 from .user_config import user_config
 from . import api as uapi
 from . import mtools
-from . import file_controller
+import webbrowser
 
 try:
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("myappid")
@@ -113,6 +113,10 @@ class UIChange(QObject):
         self.ui_main_tab.actionRefresh.triggered.connect(self.refresh_all_ui)
         self.ui_main_tab.actionPull_From_Server.triggered.connect(self.pull_data_from_server)
         self.ui_main_tab.pushButton_commit.clicked.connect(self.commit_data_to_server)
+        self.ui_main_tab.actionAbout.triggered.connect(lambda *x: webbrowser.open(
+            "https://github.com/chinosk6/Trainers-Legend-Barbecue"
+        ))
+        self.ui_main_tab.actionChange_Token.triggered.connect(self.change_token)
 
     def signal_reg(self):  # 信号槽注册
         self.show_msgbox_signal.connect(self.show_message_box)
@@ -137,6 +141,18 @@ class UIChange(QObject):
     def set_refresh_stat(self, enable: bool):
         self.ui_main_tab.actionRefresh.setEnabled(enable)
         self.ui_main_tab.actionPlease_Wait.setVisible(False if enable else True)
+
+    def change_token(self):
+        text, ok = QInputDialog.getText(self.window_main_tab, translate("MainWindow", "Update token"),
+                                        translate("MainWindow", "Input your new token. (Left blank will be modified randomly)"))
+        if ok:
+            new_token = uapi.update_token(text.strip())
+            if new_token:
+                self.show_message_box(translate("MainWindow", "Success"),
+                                      translate("MainWindow", "Your new token is:") + f"\n{new_token}")
+            else:
+                self.show_message_box(translate("MainWindow", "Failed"),
+                                      translate("MainWindow", "Update token failed."))
 
     def user_login(self, *args):
         try:

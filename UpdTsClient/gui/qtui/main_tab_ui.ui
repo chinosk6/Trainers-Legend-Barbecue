@@ -407,6 +407,8 @@ p, li { white-space: pre-wrap; }
    <addaction name="separator"/>
    <addaction name="actionAbout"/>
    <addaction name="separator"/>
+   <addaction name="actionChange_Token"/>
+   <addaction name="separator"/>
    <addaction name="actionPlease_Wait"/>
   </widget>
   <action name="actionRefresh">
@@ -430,6 +432,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Synchronizing data, please wait</string>
+   </property>
+  </action>
+  <action name="actionChange_Token">
+   <property name="text">
+    <string>Change Token</string>
    </property>
   </action>
  </widget>

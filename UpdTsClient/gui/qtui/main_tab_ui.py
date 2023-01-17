@@ -210,11 +210,15 @@ class Ui_MainWindow(object):
         self.actionPull_From_Server.setObjectName("actionPull_From_Server")
         self.actionPlease_Wait = QtWidgets.QAction(MainWindow)
         self.actionPlease_Wait.setObjectName("actionPlease_Wait")
+        self.actionChange_Token = QtWidgets.QAction(MainWindow)
+        self.actionChange_Token.setObjectName("actionChange_Token")
         self.toolBar.addAction(self.actionRefresh)
         self.toolBar.addSeparator()
         self.toolBar.addAction(self.actionPull_From_Server)
         self.toolBar.addSeparator()
         self.toolBar.addAction(self.actionAbout)
+        self.toolBar.addSeparator()
+        self.toolBar.addAction(self.actionChange_Token)
         self.toolBar.addSeparator()
         self.toolBar.addAction(self.actionPlease_Wait)
 
@@ -255,4 +259,5 @@ class Ui_MainWindow(object):
         self.actionPull_From_Server.setText(_translate("MainWindow", "Pull From Server"))
         self.actionPlease_Wait.setText(_translate("MainWindow", "Synchronizing data, please wait"))
         self.actionPlease_Wait.setToolTip(_translate("MainWindow", "Synchronizing data, please wait"))
+        self.actionChange_Token.setText(_translate("MainWindow", "Change Token"))
 from . import msrc_rc
