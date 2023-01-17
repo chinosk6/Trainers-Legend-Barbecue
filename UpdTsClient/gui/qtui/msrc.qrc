@@ -1,0 +1,11 @@
+<RCC>
+  <qresource prefix="trans">
+    <file>file_preview_ui.qm</file>
+    <file>guimain.qm</file>
+    <file>main_tab_ui.qm</file>
+    <file>main_ui.qm</file>
+  </qresource>
+  <qresource prefix="img">
+    <file>jibai.ico</file>
+  </qresource>
+</RCC>

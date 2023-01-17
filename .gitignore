@@ -1,0 +1,12 @@
+﻿/.vs
+/UpdTsClient/.idea
+/UpdTsServer/.idea
+/UpdTsServer/.mvn
+/UpdTsServer/lib
+/UpdTsServer/src/main/resources/db/umaupd - 副本.db
+/UpdTsServer/trans_files
+/UpdTsClient/build
+/UpdTsClient/dist
+__pycache__
+/UpdTsClient/legend_bbq.exe.spec
+/UpdTsClient/transControllerConfig.json

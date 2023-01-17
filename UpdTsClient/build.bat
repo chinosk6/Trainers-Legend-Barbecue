@@ -1,0 +1,1 @@
+pyinstaller -F --noconsole -i jibai.ico -n legend_bbq.exe main.py --upx-dir "E:\upx"

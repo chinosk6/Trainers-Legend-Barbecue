@@ -1,0 +1,22 @@
+server:
+  address: "0.0.0.0"
+  port: 14523
+
+spring:
+  datasource:
+    url: jdbc:p6spy:sqlite::resource:db/umaupd.db
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+  sql:
+    init:
+      schema-locations: classpath*:db/createTbl.sql
+      mode: always
+
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 20MB
+
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: off
