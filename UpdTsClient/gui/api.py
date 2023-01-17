@@ -25,31 +25,37 @@ def get_file(file_name: str, file_hash: str):
 
 
 def upload_file(file_name: str, file_full_path: str, description: str):
-    api = user_config.api_endpoint
-    token = user_config.token
-    url = f"{api}/api/post_file"
-    payload = {'filename': file_name,
-               'description': description}
-    files = [
-        ('file', (
-            file_name,
-            open(file_full_path, 'rb'),
-            'text/plain'))
-    ]
-    headers = {
-        'token': token
-    }
-    return requests.request("POST", url, headers=headers, data=payload, files=files)
+    try:
+        api = user_config.api_endpoint
+        token = user_config.token
+        url = f"{api}/api/post_file"
+        payload = {'filename': file_name,
+                   'description': description}
+        files = [
+            ('file', (
+                file_name,
+                open(file_full_path, 'rb'),
+                'text/plain'))
+        ]
+        headers = {
+            'token': token
+        }
+        return requests.request("POST", url, headers=headers, data=payload, files=files)
+    except BaseException as e:
+        return e
 
 
 def delete_file(filename: str):
-    api = user_config.api_endpoint
-    token = user_config.token
-    url = f"{api}/api/delete_file"
-    headers = {
-        'token': token
-    }
-    return requests.request("DELETE", url, headers=headers, params={"filename": filename})
+    try:
+        api = user_config.api_endpoint
+        token = user_config.token
+        url = f"{api}/api/delete_file"
+        headers = {
+            'token': token
+        }
+        return requests.request("DELETE", url, headers=headers, params={"filename": filename})
+    except BaseException as e:
+        return e
 
 
 def update_token(new_token=None):

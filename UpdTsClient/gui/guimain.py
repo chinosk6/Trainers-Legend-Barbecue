@@ -89,6 +89,8 @@ class UIChange(QObject):
         self.reg_clicked_connects()
         self.signal_reg()
 
+        self._server_load_finished = False
+
     def load_i18n(self):
         if local_language in sChinese_lang_id:
             self.trans.load(":/trans/file_preview_ui.qm")
@@ -199,8 +201,10 @@ class UIChange(QObject):
         def _():
             try:
                 # self.set_refresh_action_signal.emit(False)
+                self._server_load_finished = False
                 data = json.loads(uapi.get_server_all_files())
                 self.server_file_data = data.get("data", [])
+                self._server_load_finished = True
             except BaseException as e:
                 self.show_msgbox_signal.emit(translate("MainWindow", "Sync Server Files Failed"), repr(e))
             finally:
@@ -304,7 +308,7 @@ class UIChange(QObject):
             self.ui_main_tab.label_log.setText("")
         Thread(target=_).start()
 
-    def build_different_file_view(self):
+    def build_different_file_view(self, *args):
         def recheck_file_list(file_list: list):
             ret = []
             for i in file_list:
@@ -322,6 +326,17 @@ class UIChange(QObject):
                 if add_flg:
                     ret.append(i)
             return ret
+
+        if not self.server_file_data:
+            if not self._server_load_finished:
+                self.ui_main_tab.label_log.setText("Please wait a minute...")
+
+                def _():
+                    while not self._server_load_finished:
+                        time.sleep(1)
+                    self.build_different_file_view_signal.emit()
+                Thread(target=_).start()
+                return
 
         server_files = {}
         self.need_add_files.clear()
@@ -353,6 +368,7 @@ class UIChange(QObject):
         self.ui_main_tab.treeWidget_different.clear()
         self.build_path_tree_view(self.ui_main_tab.treeWidget_different, tree_file_list, ["Name", "Type"], ["type"])
         self.update_ignore_tree(build_view=False)
+        self.ui_main_tab.label_log.setText("")
 
     def diff_file_menu(self):
         self.ui_main_tab.treeWidget_different.contextMenu = QMenu()
@@ -548,7 +564,7 @@ class UIChange(QObject):
     def different_file_view_onclick(self, mindex: QtCore.QModelIndex):
         pass
 
-    def update_commit_tree(self):
+    def update_commit_tree(self, build_diff_tree=True):
         self.ui_main_tab.treeWidget_commit.clear()
         tree_file_list = []
         for m in self.need_add_files:
@@ -565,7 +581,8 @@ class UIChange(QObject):
                     tree_file_list.append({"filename": i, "type": "Modified"})
         self.build_path_tree_view(self.ui_main_tab.treeWidget_commit, tree_file_list,
                                   ["Name", "Type"], ["type"])
-        self.build_different_file_view()
+        if build_diff_tree:
+            self.build_different_file_view()
 
     def update_ignore_tree(self, build_view=True):
         self.ui_main_tab.treeWidget_ignore.clear()
@@ -603,7 +620,7 @@ class UIChange(QObject):
         self.update_local_files_tree()
         self.start_sync_server_files()
         self.build_local_file_list()
-        self.update_commit_tree()
+        self.update_commit_tree(build_diff_tree=False)
 
     def get_server_file_hash(self, file_name: str):
         for i in self.server_file_data:
@@ -688,15 +705,21 @@ class UIChange(QObject):
             for i in upload_file_list:
                 full_name = f"{file_root}/{i}"
                 response = uapi.upload_file(i, full_name, description)
-                if response.status_code != 200:
-                    self.set_label_log_text_signal.emit(f"Upload file: {i} failed ({response.status_code}).")
+                if isinstance(response, BaseException):
+                    self.show_msgbox_signal.emit("Exception Occurred", repr(response))
+                else:
+                    if response.status_code != 200:
+                        self.set_label_log_text_signal.emit(f"Upload file: {i} failed ({response.status_code}).")
                 count += 1
                 self.set_bar_value_signal.emit(int(count / tlen * 100))
 
             for i in delete_file_list:
                 response = uapi.delete_file(i)
-                if response.status_code != 200:
-                    self.set_label_log_text_signal.emit(f"Delete file: {i} failed ({response.status_code}).")
+                if isinstance(response, BaseException):
+                    self.show_msgbox_signal.emit("Exception Occurred", repr(response))
+                else:
+                    if response.status_code != 200:
+                        self.set_label_log_text_signal.emit(f"Delete file: {i} failed ({response.status_code}).")
                 count += 1
                 self.set_bar_value_signal.emit(int(count / tlen * 100))
 
