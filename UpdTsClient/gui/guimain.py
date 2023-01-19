@@ -97,11 +97,20 @@ class UIChange(QObject):
             self.trans2.load(":/trans/guimain.qm")
             self.trans3.load(":/trans/main_tab_ui.qm")
             self.trans4.load(":/trans/main_ui.qm")
+            self.install_trans()
 
-            self.app.installTranslator(self.trans)
-            self.app.installTranslator(self.trans2)
-            self.app.installTranslator(self.trans3)
-            self.app.installTranslator(self.trans4)
+        elif local_language in tChinese_lang_id:
+            self.trans.load(":/trans/ts_zh_tw/file_preview_ui.qm")
+            self.trans2.load(":/trans/ts_zh_tw/guimain.qm")
+            self.trans3.load(":/trans/ts_zh_tw/main_tab_ui.qm")
+            self.trans4.load(":/trans/ts_zh_tw/main_ui.qm")
+            self.install_trans()
+
+    def install_trans(self):
+        self.app.installTranslator(self.trans)
+        self.app.installTranslator(self.trans2)
+        self.app.installTranslator(self.trans3)
+        self.app.installTranslator(self.trans4)
 
     def reg_clicked_connects(self):  # 点击回调注册
         self.ui.pushButton_ok.clicked.connect(self.user_login)
