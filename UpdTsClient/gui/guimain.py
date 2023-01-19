@@ -719,6 +719,9 @@ class UIChange(QObject):
                 else:
                     if response.status_code != 200:
                         self.set_label_log_text_signal.emit(f"Upload file: {i} failed ({response.status_code}).")
+                        self.show_msgbox_signal.emit("Exception Occurred",
+                                                     f"Upload file: {i} failed ({response.status_code})\n"
+                                                     f"{response.text}")
                 count += 1
                 self.set_bar_value_signal.emit(int(count / tlen * 100))
 
@@ -729,6 +732,9 @@ class UIChange(QObject):
                 else:
                     if response.status_code != 200:
                         self.set_label_log_text_signal.emit(f"Delete file: {i} failed ({response.status_code}).")
+                        self.show_msgbox_signal.emit("Exception Occurred",
+                                                     f"Delete file: {i} failed ({response.status_code})\n"
+                                                     f"{response.text}")
                 count += 1
                 self.set_bar_value_signal.emit(int(count / tlen * 100))
 
