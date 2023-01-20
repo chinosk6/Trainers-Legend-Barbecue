@@ -249,17 +249,37 @@ public class MainController {
     public ResponseEntity<HashMap<String, Object>> requestFileList(@RequestBody Map<String, String> param) {
         FileInfoDAO fileInfoDAO = FileInfoDAO.getInstance();
         List<FileInfoBase> fileInfoBaseList = fileInfoDAO.getAll();
-        Map<String, String> ret = new HashMap<>();
+        Map<String, Map<String, String>> ret = new HashMap<>();
+        HashMap<Integer, String> userNames = new HashMap<>();
 
         for (FileInfoBase i : fileInfoBaseList) {
+            String userName;
+            if (userNames.containsKey(i.getUpdateUserid())) {
+                userName = userNames.get(i.getUpdateUserid());
+            }
+            else {
+                userName = umaUsersDAO.getUserNameFromUID(i.getUpdateUserid());
+                userNames.put(i.getUpdateUserid(), userName);
+            }
+
             if (param.containsKey(i.getFilename())) {
                 String userFileHash = param.get(i.getFilename());
                 if (!i.getHash().equals(userFileHash)) {
-                    ret.put(i.getFilename(), i.getHash());
+                    Map<String, String> putData = new HashMap<>(){{
+                       put("hash", i.getHash());
+                       put("user", userName);
+                       put("desc", i.getDescription());
+                    }};
+                    ret.put(i.getFilename(), putData);
                 }
             }
             else {
-                ret.put(i.getFilename(), i.getHash());
+                Map<String, String> putData = new HashMap<>(){{
+                    put("hash", i.getHash());
+                    put("user", userName);
+                    put("desc", i.getDescription());
+                }};
+                ret.put(i.getFilename(), putData);
             }
         }
         return returnGenerator(200, true, "success", ret);
