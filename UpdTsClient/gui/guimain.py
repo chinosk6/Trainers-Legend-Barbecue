@@ -649,11 +649,10 @@ class UIChange(QObject):
         while iterator.value():
             if iterator.value().data(0, 115) == "file":
                 edit_type = iterator.value().data(1, 0)
-                if edit_type not in ["Delete", "Modified"]:
-                    continue
-                file_name = iterator.value().data(0, 114)
-                file_hash = self.get_server_file_hash(file_name)
-                sync_file_list.append((file_name, file_hash))
+                if edit_type in ["Delete", "Modified"]:
+                    file_name = iterator.value().data(0, 114)
+                    file_hash = self.get_server_file_hash(file_name)
+                    sync_file_list.append((file_name, file_hash))
             iterator.__iadd__(1)
         file_root = user_config.config.get("file_root", None)
         if file_root is None:
